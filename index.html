@@ -1,103 +1,26 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
   <meta charset="UTF-8" />
   <title>Scan QR & Gestion Stock</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <script src="https://unpkg.com/html5-qrcode"></script>
-  <style>
-    body {
-      margin: 0;
-      background-color: #0a1e3a;
-      color: #e0e6f0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-        Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 20px;
-      min-height: 100vh;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
-    h1 {
-      font-weight: 600;
-      margin-bottom: 20px;
-      text-align: center;
-    }
-    #reader {
-      width: 300px;
-      max-width: 90vw;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 0 15px rgba(0,0,0,0.4);
-      margin-bottom: 15px;
-      border: 2px solid #3b6fc2;
-    }
-    #scannedValueInput {
-      width: 300px;
-      max-width: 90vw;
-      padding: 10px 15px;
-      font-size: 1.1rem;
-      border-radius: 12px;
-      border: 2px solid #3b6fc2;
-      background-color: #12305a;
-      color: #e0e6f0;
-      outline: none;
-      user-select: text;
-      margin-bottom: 25px;
-      transition: border-color 0.3s ease;
-    }
-    #scannedValueInput:focus {
-      border-color: #5ca0ff;
-      background-color: #1b3a72;
-    }
-    .btn-group {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 15px;
-      margin-bottom: 25px;
-    }
-    button {
-      background-color: #2e4db7;
-      color: #e0e6f0;
-      border: none;
-      border-radius: 25px;
-      padding: 14px 26px;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-      box-shadow: 0 4px 8px rgba(46,77,183,0.4);
-      min-width: 120px;
-    }
-    button:disabled {
-      background-color: #506aa4;
-      cursor: not-allowed;
-      box-shadow: none;
-    }
-    button:hover:not(:disabled) {
-      background-color: #1f356f;
-    }
-    #result {
-      text-align: center;
-      font-size: 1rem;
-      min-height: 28px;
-      color: #aad4ff;
-      max-width: 90vw;
-      word-wrap: break-word;
-      user-select: text;
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css">
+  <script src="scanQR.js" defer> </script>
 </head>
+
 <body>
+  <div id="topMenu">
+    <button id="btnScanQR">Démarrer Scan QR</button>
+    <button id="btnGenerateCode">Générer Code</button>
+  </div>
+
   <h1>Scanner un QR Code</h1>
 
   <div id="reader"></div>
 
-  <!-- Zone modifiable contenant le code scanné -->
-  <input type="text" id="scannedValueInput" placeholder="Le code scanné apparaîtra ici" readonly />
+  <input type="text" id="scannedValueInput" placeholder="Le code scanné apparaîtra ici" />
 
   <div class="btn-group">
     <button id="addStockBtn" disabled>Ajouter Stock</button>
@@ -107,111 +30,6 @@
 
   <div id="result"></div>
 
-  <script>
-    const scriptUrl = "https://script.google.com/macros/s/TON_URL/exec";
-
-    let qrScanner = null;
-
-    const scannedValueInput = document.getElementById("scannedValueInput");
-    const addBtn = document.getElementById("addStockBtn");
-    const removeBtn = document.getElementById("removeStockBtn");
-    const rescanBtn = document.getElementById("rescanBtn");
-    const resultEl = document.getElementById("result");
-
-    function toggleButtons(enabled) {
-      addBtn.disabled = !enabled;
-      removeBtn.disabled = !enabled;
-      rescanBtn.disabled = !enabled;
-      scannedValueInput.readOnly = !enabled;
-    }
-
-    function startScanner() {
-      toggleButtons(false);
-      scannedValueInput.value = "En attente du scan...";
-      if (qrScanner) {
-        qrScanner.start(
-          { facingMode: "environment" },
-          { fps: 10, qrbox: 250 },
-          qrCodeMessage => {
-            qrScanner.stop().then(() => {
-              scannedValueInput.value = qrCodeMessage;
-              toggleButtons(true);
-              resultEl.textContent = "";
-            }).catch(err => {
-              console.error("Erreur arrêt scan:", err);
-              resultEl.textContent = "Erreur en stoppant le scanner";
-            });
-          },
-          errorMessage => {
-            // Pas d'affichage d'erreur pour ne pas spammer la console
-          }
-        ).catch(err => {
-          resultEl.textContent = "Erreur démarrage scanner: " + err;
-          console.error(err);
-        });
-      }
-    }
-
-    function sendToSheet(message, action) {
-      if (!message.trim()) {
-        alert("Le champ est vide. Veuillez scanner ou saisir un code.");
-        return;
-      }
-      resultEl.textContent = `Envoi en cours (${action})...`;
-      fetch(scriptUrl, {
-        method: "POST",
-        body: JSON.stringify({ message, action }),
-        headers: { "Content-Type": "application/json" },
-        credentials: "include"
-      })
-      .then(res => res.text())
-      .then(text => {
-        resultEl.textContent = `${action} effectué pour : ${message} (${text})`;
-        scannedValueInput.value = "";
-        toggleButtons(false);
-      })
-      .catch(err => {
-        resultEl.textContent = `Erreur lors de l'envoi : ${err}`;
-      });
-    }
-
-    window.onload = () => {
-      qrScanner = new Html5Qrcode("reader");
-      startScanner();
-
-      addBtn.addEventListener("click", () => {
-        sendToSheet(scannedValueInput.value, "Ajout Stock");
-      });
-
-      removeBtn.addEventListener("click", () => {
-        sendToSheet(scannedValueInput.value, "Retrait Stock");
-      });
-
-      rescanBtn.addEventListener("click", () => {
-        scannedValueInput.value = "En attente du scan...";
-        resultEl.textContent = "";
-        toggleButtons(false);
-        if (qrScanner) {
-          qrScanner.start(
-            { facingMode: "environment" },
-            { fps: 10, qrbox: 250 },
-            qrCodeMessage => {
-              qrScanner.stop().then(() => {
-                scannedValueInput.value = qrCodeMessage;
-                toggleButtons(true);
-                resultEl.textContent = "";
-              });
-            },
-            errorMessage => {
-              // Ignorer les erreurs de scan
-            }
-          ).catch(err => {
-            resultEl.textContent = "Erreur démarrage scanner: " + err;
-            console.error(err);
-          });
-        }
-      });
-    }
-  </script>
 </body>
+
 </html>
