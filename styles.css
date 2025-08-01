@@ -20,8 +20,8 @@
     border: none;
     border-radius: 25px;
     padding: 8px 16px;          /* réduit padding */
-    font-weight: 70;
-    font-size: 0.85rem;         /* réduit taille texte */
+    font-weight: 700;
+    font-size: 0.65rem;         /* réduit taille texte */
     cursor: pointer;
     box-shadow: 0 5px 12px rgba(46, 77, 183, 0.6);
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
@@ -47,7 +47,7 @@
     border-radius: 30px;
     padding: 8px 18px;          /* réduit padding */
     font-weight: 700;
-    font-size: 0.85rem;         /* réduit taille texte */
+    font-size: 0.65rem;         /* réduit taille texte */
     cursor: pointer;
     box-shadow: 0 5px 14px rgba(255, 170, 0, 0.7);
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
