@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Login Google OAuth</title>
+  <script src="https://apis.google.com/js/api.js"></script>
+  <script>
+    // Remplace par ton propre Client ID Google OAuth 2.0
+    const CLIENT_ID = '440684762959-1for0aulaia3dl2losusca0vjhnsei95.apps.googleusercontent.com';
+
+    // Scopes nécessaires pour accéder aux Google Sheets
+    const SCOPES = 'https://www.googleapis.com/auth/spreadsheets';
+
+    // Chargement et initialisation de la librairie Google API client
+    function handleClientLoad() {
+      gapi.load('client:auth2', initClient);
+    }
+
+    // Initialisation du client avec API key (optionnel) + clientId + scopes
+    function initClient() {
+      gapi.client.init({
+        clientId: CLIENT_ID,
+        scope: SCOPES
+      }).then(() => {
+        // Écoute du changement d'état de connexion
+        gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
+        // Vérifie le statut actuel
+        updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
+
+        // Bouton connexion
+        document.getElementById('btn-signin').onclick = () => {
+          gapi.auth2.getAuthInstance().signIn();
+        };
+        // Bouton déconnexion
+        document.getElementById('btn-signout').onclick = () => {
+          gapi.auth2.getAuthInstance().signOut();
+        };
+      }, (error) => {
+        console.error('Erreur init client:', error);
+      });
+    }
+
+    // Mise à jour de l'UI selon statut connexion
+    function updateSigninStatus(isSignedIn) {
+      if (isSignedIn) {
+        document.getElementById('btn-signin').style.display = 'none';
+        document.getElementById('btn-signout').style.display = 'inline-block';
+        document.getElementById('status').textContent = 'Connecté';
+        // Ici tu peux appeler ta fonction pour manipuler Google Sheets
+        // Exemple: loadSheetData();
+      } else {
+        document.getElementById('btn-signin').style.display = 'inline-block';
+        document.getElementById('btn-signout').style.display = 'none';
+        document.getElementById('status').textContent = 'Non connecté';
+      }
+    }
+
+    // Démarre la fonction au chargement page
+    window.onload = handleClientLoad;
+  </script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 2em;
+      text-align: center;
+    }
+    button {
+      font-size: 1.2em;
+      padding: 0.6em 1.2em;
+      margin: 1em;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>Login Google OAuth</h1>
+  <button id="btn-signin">Se connecter avec Google</button>
+  <button id="btn-signout" style="display:none;">Se déconnecter</button>
+  <p>Status: <strong id="status">Non connecté</strong></p>
+</body>
+</html>
