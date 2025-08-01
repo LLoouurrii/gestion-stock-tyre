@@ -14,19 +14,18 @@
     gap: 20px;
 }
 
-
 #topMenu > button {
     background-color: #2e4db7;
     color: #e0e6f0;
     border: none;
     border-radius: 25px;
-    padding: 12px 24px;
+    padding: 8px 16px;          /* réduit padding */
     font-weight: 700;
-    font-size: 1rem;
+    font-size: 0.85rem;         /* réduit taille texte */
     cursor: pointer;
     box-shadow: 0 5px 12px rgba(46, 77, 183, 0.6);
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
-    min-width: 140px;
+    min-width: 100px;           /* réduit largeur min */
     user-select: none;
 }
 
@@ -46,13 +45,13 @@
     color: #12305a;
     border: 2px solid #e0c060;
     border-radius: 30px;
-    padding: 12px 28px;
+    padding: 8px 18px;          /* réduit padding */
     font-weight: 700;
-    font-size: 1rem;
+    font-size: 0.85rem;         /* réduit taille texte */
     cursor: pointer;
     box-shadow: 0 5px 14px rgba(255, 170, 0, 0.7);
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
-    min-width: 140px;
+    min-width: 100px;           /* réduit largeur min */
     user-select: none;
 }
 
