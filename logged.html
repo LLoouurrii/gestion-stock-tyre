@@ -6,7 +6,7 @@
   <title>Scan QR & Gestion Stock</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- Librairies -->
+  <!-- Librairie QR Code et Scanner -->
   <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
   <script src="https://unpkg.com/html5-qrcode"></script>
 
@@ -30,41 +30,49 @@
 
   <div id="reader" style="margin-bottom: 20px;"></div>
 
-  <input type="text" id="scannedValueInput" placeholder="Le code scanné apparaîtra ici" style="margin: 20px auto; display: block; width: 300px; text-align: center;" />
+  <!-- Champ pour afficher la valeur scannée -->
+  <input type="text" id="scannedValueInput" placeholder="Le code scanné apparaîtra ici"
+    style="margin: 10px auto 30px auto; display: block; text-align: center;" />
 
   <div id="controls" class="btn-group" style="flex-direction: column; align-items: center;">
-    <!-- Groupe Référence + Option C -->
-    <div style="display: flex; gap: 10px; align-items: flex-start; margin-bottom: 4px;">
+
+    <!-- Groupe horizontal : Référence + Option C -->
+    <div style="display: flex; gap: 10px; align-items: flex-start; max-width: 100%; margin-bottom: 4px; margin-left: -20px;">
       <div style="display: flex; flex-direction: column;">
         <label for="referenceBox" style="font-size: 1rem; font-weight: 600; margin-bottom: 4px; color: #f5f5f5;">Référence</label>
-        <input type="text" id="referenceBox" maxlength="9" placeholder="XXX/XXXXX" style="text-transform: uppercase; width: 150px;" />
+        <input type="text" id="referenceBox" maxlength="9" placeholder="XXX/XXXXX"
+          style="text-transform: uppercase;width: 150px;" />
       </div>
       <div style="display: flex; flex-direction: column;">
-        <label for="optionC" style="font-size: 1rem; font-weight: 600; margin-bottom: 4px; color: #f5f5f5;">Camionette</label>
-        <input type="text" id="optionC" maxlength="1" placeholder="C" style="width: 40px; text-align: center; text-transform: uppercase;" />
+        <label for="optionC" style="font-size: 1rem; font-weight: 600; margin-bottom: 4px; color: #f5f5f5;">Camionnette</label>
+        <input type="text" id="optionC" maxlength="1" placeholder="C"
+          style="width: 40px; text-align: center; text-transform: uppercase;" />
       </div>
     </div>
 
-    <!-- Charge + Vitesse -->
-    <div style="display: flex; gap: 20px; margin-bottom: 10px;">
+    <!-- Indice de charge + vitesse -->
+    <div style="display: flex; gap: 20px; margin-bottom: 10px; align-items: flex-start; margin-top: -30px; margin-left: -20px;">
       <div style="display: flex; flex-direction: column;">
         <label for="indiceCharge" style="font-size: 1rem; font-weight: 600; margin-bottom: 4px; color: #f5f5f5;">Charge</label>
-        <input type="text" id="indiceCharge" maxlength="7" placeholder="107/105" style="width: 80px; text-align: center; text-transform: uppercase;" />
+        <input type="text" id="indiceCharge" maxlength="7" placeholder="107/105"
+          style="width: 80px; text-align: center; text-transform: uppercase;" />
       </div>
       <div style="display: flex; flex-direction: column;">
         <label for="indiceVitesse" style="font-size: 1rem; font-weight: 600; margin-bottom: 4px; color: #f5f5f5;">Vitesse</label>
-        <input type="text" id="indiceVitesse" maxlength="1" placeholder="H" style="width: 40px; text-align: center; text-transform: uppercase;" />
+        <input type="text" id="indiceVitesse" maxlength="1" placeholder="H"
+          style="width: 40px; text-align: center; text-transform: uppercase;" />
       </div>
     </div>
 
     <!-- Marque -->
-    <div style="display: flex; flex-direction: column; align-items: flex-start; width: 100%; max-width: 360px; margin-bottom: 10px;">
-      <label for="marque" style="font-size: 1rem; font-weight: 600; margin-bottom: 4px; color: #f5f5f5;">Marque</label>
-      <input type="text" id="marque" placeholder="DOUBLECOIN" style="width: 100%; max-width: 240px; text-transform: uppercase;" />
+    <div style="display: flex; flex-direction: column; align-items: flex-start; width: 100%; max-width: 360px; margin-bottom: 10px; margin-left: 60px;">
+      <label for="marque" style="font-size: 1rem; font-weight: 600; margin-bottom: 4px; margin-top: -35px; color: #f5f5f5;">Marque</label>
+      <input type="text" id="marque" placeholder="DOUBLECOIN"
+        style="width: 100%; max-width: 240px; text-transform: uppercase;" />
     </div>
 
     <!-- Saison -->
-    <div style="display: flex; flex-direction: column; align-items: center; width: 100%; max-width: 360px; margin-bottom: 10px;">
+    <div style="display: flex; flex-direction: column; align-items: center; width: 100%; max-width: 360px; margin-bottom: 10px; margin-top: -30px; margin-left: -20px;">
       <label for="saison" style="font-size: 1rem; font-weight: 500; margin-bottom: 4px; color: #f5f5f5;">Saison</label>
       <select id="saison">
         <option value="">-- Sélectionner --</option>
@@ -74,15 +82,16 @@
       </select>
     </div>
 
-    <!-- Boutons Stock -->
-    <div class="btn-group" style="margin-top: 10px;">
+    <!-- Boutons de gestion stock -->
+    <div class="btn-group" style="margin-top: 10px; margin-left: -12px;">
       <button id="addStockBtn" disabled>Ajouter Stock</button>
       <button id="removeStockBtn" disabled>Retirer Stock</button>
       <button id="rescanBtn" disabled>Rescanner</button>
     </div>
   </div>
 
-  <div id="result"></div>
+  <!-- Zone d'affichage résultat -->
+  <div id="result" style="margin-top: 20px; text-align: center;"></div>
 </body>
 
 </html>
