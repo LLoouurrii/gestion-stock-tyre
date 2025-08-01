@@ -9,12 +9,24 @@
 
 <body>
 
-    <div id="topMenu"
-        style="display:flex; align-items:center; padding:14px 20px; background:linear-gradient(90deg, #12305a, #2e4db7); color:#e0e6f0; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+    <!-- Barre de menu -->
+    <div id="topMenu">
         <button id="btnScanQR" onclick="window.location.href='logged.html'">Démarrer Scan QR</button>
         <button id="btnGenerateCode" onclick="window.location.href='generate.html'">Générer Code</button>
-        <button id="btnMonCompte" class="btn-account">Mon compte</button>
+        <button id="btnMonCompte" class="btn-account active">Mon compte</button>
     </div>
+
+    <!-- Contenu principal -->
+    <main style="margin-top: 40px; text-align: center;">
+        <h1>Bienvenue sur votre espace</h1>
+        <p>Gérez ici vos informations, votre stock ou vos paramètres.</p>
+
+        <div class="btn-group">
+            <button onclick="alert('Infos utilisateur à venir')">Mes infos</button>
+            <button onclick="alert('Historique à venir')">Historique</button>
+            <button onclick="alert('Paramètres à venir')">Paramètres</button>
+        </div>
+    </main>
 
 </body>
 
