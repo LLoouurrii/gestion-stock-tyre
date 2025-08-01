@@ -16,34 +16,49 @@ function updateButtonsState() {
   document.getElementById(id).addEventListener("change", updateButtonsState);
 });
 
-function sendToSheet(action) {
+function sendToSheet(quantite) {
+  const url = "https://script.google.com/macros/s/AKfycbziOK9G25lDSPj7pn7JwIQ_ChR_8C6uo2F8WAZxemyGEmuuekX0KysIT-2PFxhu5f8K/exec";
+
   const ref = document.getElementById("referenceBox").value.trim();
+  const camionnette = document.getElementById("optionC").value.trim();
+  const charge = document.getElementById("indiceCharge").value.trim();
+  const vitesse = document.getElementById("indiceVitesse").value.trim();
   const marque = document.getElementById("marque").value.trim();
   const saison = document.getElementById("saison").value;
-  const url = "https://script.google.com/macros/s/AKfycbyd2DtU3z3JnOazZo0lJOZosfrp_F5vLe8QsBySzZ4/dev";
 
   if (!ref || !marque || !saison) {
-    alert("Veuillez remplir tous les champs nécessaires.");
+    alert("Veuillez remplir tous les champs obligatoires.");
     return;
   }
 
-  const data = { reference: ref, marque: marque, saison: saison, action: action };
+  const data = {
+    reference: ref,
+    camionnette: camionnette,
+    charge: charge,
+    vitesse: vitesse,
+    marque: marque,
+    saison: saison,
+    quantite: quantite
+  };
 
   fetch(url, {
     method: "POST",
     body: JSON.stringify(data),
-    headers: { "Content-Type": "application/json" }
+    headers: { "Content-Type": "application/json" },
+    mode: "no-cors"
   })
-    .then(res => res.text())
-    .then(txt => {
-      document.getElementById("result").textContent = `${action} effectué pour ${ref} (${txt})`;
-    })
-    .catch(err => {
-      document.getElementById("result").textContent = "❌ Erreur : " + err;
-    });
+  .then(() => {
+    const message = quantite > 0 
+      ? `✅ ${ref} ajouté au stock`
+      : `✅ ${ref} retiré du stock`;
+    document.getElementById("result").textContent = message;
+  })
+  .catch(err => {
+    document.getElementById("result").textContent = "❌ Erreur : " + err;
+  });
 }
 
-addBtn.addEventListener("click", () => sendToSheet("Ajout Stock"));
-removeBtn.addEventListener("click", () => sendToSheet("Retrait Stock"));
+addBtn.addEventListener("click", () => sendToSheet(1));
+removeBtn.addEventListener("click", () => sendToSheet(-1));
 
 window.onload = updateButtonsState;
