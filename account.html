@@ -5,28 +5,25 @@
     <meta charset="UTF-8" />
     <title>Mon Compte</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script src="accountInfo.js" defer></script>
+
 </head>
 
 <body>
-
     <!-- Barre de menu -->
     <div id="topMenu">
-        <button id="btnScanQR" onclick="window.location.href='logged.html'">Démarrer Scan QR</button>
-        <button id="btnGenerateCode" onclick="window.location.href='generate.html'">Générer Code</button>
+        <button onclick="window.location.href='logged.html'">Démarrer Scan QR</button>
+        <button onclick="window.location.href='generate.html'">Générer Code</button>
         <button id="btnMonCompte" class="btn-account active">Mon compte</button>
     </div>
 
-    <!-- Contenu principal -->
-    <main style="margin-top: 40px; text-align: center;">
-        <h1>Bienvenue sur votre espace</h1>
-        <p>Gérez ici vos informations, votre stock ou vos paramètres.</p>
+    <div id="userInfo" style="text-align:center; margin-top:40px;">
+        <h2>Bienvenue !</h2>
+        <p id="userName"></p>
+        <p id="userEmail"></p>
+    </div>
 
-        <div class="btn-group">
-            <button onclick="alert('Infos utilisateur à venir')">Mes infos</button>
-            <button onclick="alert('Historique à venir')">Historique</button>
-            <button onclick="alert('Paramètres à venir')">Paramètres</button>
-        </div>
-    </main>
 
 </body>
 
