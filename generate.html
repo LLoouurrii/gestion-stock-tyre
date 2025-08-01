@@ -8,13 +8,15 @@
     <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
     <link rel="stylesheet" href="styles.css">
     <script src="generateQR.js"></script>
+    <script src="scanQR.js" defer> </script>
 </head>
 
 <body>
     <!-- Barre de navigation -->
     <div id="topMenu">
-        <button onclick="location.href='index.html'">Démarrer Scan QR</button>
-        <button class="active">Générer Code</button>
+        <button id="btnScanQR" onclick="window.location.href='logged.html'">Démarrer Scan QR</button>
+        <button id="btnGenerateCode">Générer Code</button>
+        <button id="btnMonCompte" class="btn-account" onclick="window.location.href='account.html'">Mon compte</button>
     </div>
 
     <h1>Générer un QR Code</h1>
@@ -27,4 +29,5 @@
 
     <div id="qrcode"></div>
 </body>
+
 </html>

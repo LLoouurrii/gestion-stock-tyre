@@ -25,3 +25,10 @@ function downloadQR() {
     link.href = canvas.toDataURL();
     link.click();
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+  const btnScanQR = document.getElementById('btnScanQR');
+  btnScanQR.addEventListener('click', () => {
+    window.location.href = 'logged.html';
+  });
+});

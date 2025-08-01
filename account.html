@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Mon Compte</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <div id="topMenu"
+        style="display:flex; align-items:center; padding:14px 20px; background:linear-gradient(90deg, #12305a, #2e4db7); color:#e0e6f0; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+        <button id="btnScanQR" onclick="window.location.href='logged.html'">Démarrer Scan QR</button>
+        <button id="btnGenerateCode">Générer Code</button>
+        <button id="btnMonCompte" class="btn-account">Mon compte</button>
+    </div>
+
+    <div id="accountInfo" style="margin-top: 30px; color: #ffaa00; font-weight: 700; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+        <div>Nom : <span id="username">Louri</span></div>
+        <div>Heure de connexion : <span id="loginTime">--:--:--</span></div>
+    </div>
+
+    <script>
+      function updateTime() {
+        const now = new Date();
+        const h = now.getHours().toString().padStart(2, '0');
+        const m = now.getMinutes().toString().padStart(2, '0');
+        const s = now.getSeconds().toString().padStart(2, '0');
+        document.getElementById('loginTime').textContent = `${h}:${m}:${s}`;
+      }
+      updateTime();
+      setInterval(updateTime, 1000);
+    </script>
+
+</body>
+
+</html>

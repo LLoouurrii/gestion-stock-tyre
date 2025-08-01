@@ -1,229 +1,261 @@
-        #topMenu {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background: linear-gradient(90deg, #12305a, #2e4db7);
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            padding: 14px 0;
-            z-index: 1000;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        #topMenu button {
-            background-color: #2e4db7;
-            color: #e0e6f0;
-            border: none;
-            border-radius: 25px;
-            padding: 12px 24px;
-            font-weight: 700;
-            font-size: 1rem;
-            cursor: pointer;
-            box-shadow: 0 5px 12px rgba(46, 77, 183, 0.6);
-            transition: background-color 0.3s ease, box-shadow 0.3s ease;
-            min-width: 140px;
-            user-select: none;
-        }
-
-        #topMenu button:hover {
-            background-color: #1f356f;
-            box-shadow: 0 6px 14px rgba(31, 53, 111, 0.8);
-        }
-
-        #topMenu button.active {
-            background-color: #5ca0ff;
-            box-shadow: 0 6px 18px rgba(92, 160, 255, 0.9);
-            color: #fff;
-        }
-
-        #controls {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-
-        input[type="text"],
-        #scannedValueInput {
-            width: 320px;
-            max-width: 90vw;
-            padding: 12px 18px;
-            font-size: 1rem;
-            border-radius: 14px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-            background-color: #12305a;
-            color: #e0e6f0;
-            border: 3px solid #2e4db7;
-            outline: none;
-            user-select: text;
-            margin-bottom: 30px;
-            transition: border-color 0.3s ease, background-color 0.3s ease;
-            text-align: center;
-            font-weight: 600;
-        }
-
-        input[type="text"]:focus,
-        #scannedValueInput:focus {
-            border-color: #5ca0ff;
-            background-color: #1f356f;
-        }
-
-        button.generate,
-        button.download {
-            background-color: #2e4db7;
-            color: #fff;
-            border: none;
-            border-radius: 20px;
-            padding: 12px 24px;
-            font-weight: 600;
-            font-size: 1rem;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(46, 77, 183, 0.5);
-            transition: background-color 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        button.generate:hover,
-        button.download:hover {
-            background-color: #1f356f;
-            box-shadow: 0 6px 16px rgba(31, 53, 111, 0.8);
-        }
-
-        #qrcode {
-            background-color: #ffffff;
-            padding: 16px;
-            border-radius: 16px;
-            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
-        }
-
-        body {
-            margin: 0;
-            padding-top: 80px;
-            /* même hauteur que la barre de menu */
-            background-color: #0a1e3a;
-            color: #e0e6f0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-                Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding-left: 20px;
-            padding-right: 20px;
-            min-height: 100vh;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-
-        h1 {
-            font-weight: 600;
-            margin-bottom: 20px;
-            text-align: center;
-            margin-top: 0;
-        }
-
-        #reader {
-            width: 320px;
-            max-width: 90vw;
-            border-radius: 14px;
-            overflow: hidden;
-            box-shadow: 0 0 20px rgba(92, 160, 255, 0.7);
-            margin: 0 auto 20px auto;
-            border: 3px solid #3b6fc2;
-            background: #11294d;
-            transition: box-shadow 0.3s ease;
-        }
-
-        #reader.scanning {
-            box-shadow: 0 0 30px 5px #5ca0ff;
-        }
-
-        #scannedValueInput {
-            width: 320px;
-            max-width: 90vw;
-            padding: 12px 18px;
-            font-size: 1.15rem;
-            border-radius: 14px;
-            border: 3px solid #3b6fc2;
-            background-color: #12305a;
-            color: #e0e6f0;
-            outline: none;
-            user-select: text;
-            margin-bottom: 30px;
-            transition: border-color 0.3s ease, background-color 0.3s ease;
-            text-align: center;
-            font-weight: 600;
-        }
-
-        #scannedValueInput:focus {
-            border-color: #5ca0ff;
-            background-color: #1b3a72;
-        }
-
-        .btn-group {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 18px;
-            margin-bottom: 30px;
-        }
-
-        .btn-group button {
-            background-color: #2e4db7;
-            color: #e0e6f0;
-            border: none;
-            border-radius: 30px;
-            padding: 16px 30px;
-            font-size: 1.1rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: background-color 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 0 5px 12px rgba(46, 77, 183, 0.5);
-            min-width: 140px;
-            user-select: none;
-        }
-
-        .btn-group button:disabled {
-            background-color: #506aa4;
-            cursor: not-allowed;
-            box-shadow: none;
-            color: #a0a8c0;
-        }
-
-        #loginAlertBanner {
-            background-color: #d32f2f;
-            /* Rouge alerte */
-            color: #fff;
-            text-align: center;
-            padding: 14px 0;
-            font-size: 1.1rem;
-            font-weight: 700;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
-            position: fixed;
-            top: 60px;
-            /* Juste sous #topMenu */
-            left: 0;
-            width: 100%;
-            z-index: 999;
-        }
+#topMenu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: linear-gradient(90deg, #12305a, #2e4db7);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;          /* centre verticalement */
+    justify-content: center;      /* centre horizontalement */
+    padding: 14px 20px;
+    z-index: 1000;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    gap: 20px;
+}
 
 
-        .btn-group button:hover:not(:disabled) {
-            background-color: #1f356f;
-            box-shadow: 0 6px 16px rgba(31, 53, 111, 0.7);
-        }
+#topMenu > button {
+    background-color: #2e4db7;
+    color: #e0e6f0;
+    border: none;
+    border-radius: 25px;
+    padding: 12px 24px;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    box-shadow: 0 5px 12px rgba(46, 77, 183, 0.6);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    min-width: 140px;
+    user-select: none;
+}
 
-        #result {
-            text-align: center;
-            font-size: 1.1rem;
-            min-height: 28px;
-            color: #aad4ff;
-            max-width: 90vw;
-            word-wrap: break-word;
-            user-select: text;
-            font-weight: 600;
-            margin-bottom: 40px;
-            min-height: 40px;
-        }
+#topMenu > button:hover {
+    background-color: #1f356f;
+    box-shadow: 0 6px 14px rgba(31, 53, 111, 0.8);
+}
+
+#topMenu > button.active {
+    background-color: #5ca0ff;
+    box-shadow: 0 6px 18px rgba(92, 160, 255, 0.9);
+    color: #fff;
+}
+
+#topMenu > button.btn-account {
+    background-color: #ffaa00;
+    color: #12305a;
+    border: 2px solid #e0c060;
+    border-radius: 30px;
+    padding: 12px 28px;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    box-shadow: 0 5px 14px rgba(255, 170, 0, 0.7);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    min-width: 140px;
+    user-select: none;
+}
+
+#topMenu > button.btn-account:hover {
+    background-color: #cc8800;
+    box-shadow: 0 6px 18px rgba(204, 136, 0, 0.9);
+}
+
+/* Contrôle de mise en page et styles des inputs */
+input[type="text"],
+#scannedValueInput {
+    width: 320px;
+    max-width: 90vw;
+    padding: 12px 18px;
+    font-size: 1rem;
+    border-radius: 14px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    background-color: #12305a;
+    color: #e0e6f0;
+    border: 3px solid #2e4db7;
+    outline: none;
+    user-select: text;
+    margin-bottom: 30px;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+    text-align: center;
+    font-weight: 600;
+}
+
+input[type="text"]:focus,
+#scannedValueInput:focus {
+    border-color: #5ca0ff;
+    background-color: #1f356f;
+}
+
+/* Styles boutons générer / télécharger (au cas où) */
+button.generate,
+button.download {
+    background-color: #2e4db7;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    padding: 12px 24px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(46, 77, 183, 0.5);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+button.generate:hover,
+button.download:hover {
+    background-color: #1f356f;
+    box-shadow: 0 6px 16px rgba(31, 53, 111, 0.8);
+}
+
+#qrcode {
+    background-color: #ffffff;
+    padding: 16px;
+    border-radius: 16px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+}
+
+/* Body */
+body {
+    margin: 0;
+    padding-top: 90px; /* même hauteur que la barre de menu */
+    background-color: #0a1e3a;
+    color: #e0e6f0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+        Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-left: 20px;
+    padding-right: 20px;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Titre principal */
+h1 {
+    font-weight: 600;
+    margin-bottom: 20px;
+    text-align: center;
+    margin-top: 0;
+}
+
+/* Lecteur QR */
+#reader {
+    width: 320px;
+    max-width: 90vw;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(92, 160, 255, 0.7);
+    margin: 0 auto 20px auto;
+    border: 3px solid #3b6fc2;
+    background: #11294d;
+    transition: box-shadow 0.3s ease;
+}
+
+#reader.scanning {
+    box-shadow: 0 0 30px 5px #5ca0ff;
+}
+
+/* Champ texte affichage code scanné */
+#scannedValueInput {
+    width: 320px;
+    max-width: 90vw;
+    padding: 12px 18px;
+    font-size: 1.15rem;
+    border-radius: 14px;
+    border: 3px solid #3b6fc2;
+    background-color: #12305a;
+    color: #e0e6f0;
+    outline: none;
+    user-select: text;
+    margin-bottom: 30px;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+    text-align: center;
+    font-weight: 600;
+}
+
+#scannedValueInput:focus {
+    border-color: #5ca0ff;
+    background-color: #1b3a72;
+}
+
+/* Groupe de boutons */
+.btn-group {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 18px;
+    margin-bottom: 30px;
+}
+
+.btn-group button {
+    background-color: #2e4db7;
+    color: #e0e6f0;
+    border: none;
+    border-radius: 30px;
+    padding: 16px 30px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 5px 12px rgba(46, 77, 183, 0.5);
+    min-width: 140px;
+    user-select: none;
+}
+
+.btn-group button:disabled {
+    background-color: #506aa4;
+    cursor: not-allowed;
+    box-shadow: none;
+    color: #a0a8c0;
+}
+
+.btn-group button:hover:not(:disabled) {
+    background-color: #1f356f;
+    box-shadow: 0 6px 16px rgba(31, 53, 111, 0.7);
+}
+
+/* Zone résultat texte */
+#result {
+    text-align: center;
+    font-size: 1.1rem;
+    min-height: 40px;
+    color: #aad4ff;
+    max-width: 90vw;
+    word-wrap: break-word;
+    user-select: text;
+    font-weight: 600;
+    margin-bottom: 40px;
+}
+
+/* Onglets (si jamais) */
+#topMenu a.tab {
+    background-color: #2e4db7;
+    color: #e0e6f0;
+    border-radius: 25px;
+    padding: 12px 24px;
+    font-weight: 700;
+    font-size: 1rem;
+    text-decoration: none;
+    cursor: pointer;
+    box-shadow: 0 5px 12px rgba(46, 77, 183, 0.6);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    min-width: 140px;
+}
+
+#topMenu a.tab:hover {
+    background-color: #1f356f;
+    box-shadow: 0 6px 14px rgba(31, 53, 111, 0.8);
+}
+
+#topMenu a.tab.active {
+    background-color: #5ca0ff;
+    box-shadow: 0 6px 18px rgba(92, 160, 255, 0.9);
+    color: #fff;
+}
