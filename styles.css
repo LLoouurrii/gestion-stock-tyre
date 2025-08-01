@@ -20,7 +20,7 @@
     border: none;
     border-radius: 25px;
     padding: 8px 16px;          /* réduit padding */
-    font-weight: 700;
+    font-weight: 70;
     font-size: 0.85rem;         /* réduit taille texte */
     cursor: pointer;
     box-shadow: 0 5px 12px rgba(46, 77, 183, 0.6);
