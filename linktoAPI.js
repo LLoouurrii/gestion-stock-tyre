@@ -16,6 +16,21 @@ function updateButtonsState() {
   document.getElementById(id).addEventListener("change", updateButtonsState);
 });
 
+function getSaisonAvecEmoji(saison) {
+  switch (saison.toLowerCase()) {
+    case "été":
+      return "☀️ Été";
+    case "hiver":
+      return "❄️ Hiver";
+    case "4 saisons":
+    case "4saisons":
+    case "4 saisons":
+      return "☀️/❄️ 4 Saisons";
+    default:
+      return saison;
+  }
+}
+
 function sendToSheet(quantite) {
   const url = "https://script.google.com/macros/s/AKfycbziOK9G25lDSPj7pn7JwIQ_ChR_8C6uo2F8WAZxemyGEmuuekX0KysIT-2PFxhu5f8K/exec";
 
@@ -24,12 +39,14 @@ function sendToSheet(quantite) {
   const charge = document.getElementById("indiceCharge").value.trim();
   const vitesse = document.getElementById("indiceVitesse").value.trim();
   const marque = document.getElementById("marque").value.trim();
-  const saison = document.getElementById("saison").value;
+  let saison = document.getElementById("saison").value;
 
   if (!ref || !marque || !saison) {
     alert("Veuillez remplir tous les champs obligatoires.");
     return;
   }
+
+  saison = getSaisonAvecEmoji(saison);
 
   const data = {
     reference: ref,
@@ -41,21 +58,22 @@ function sendToSheet(quantite) {
     quantite: quantite
   };
 
+  const resultDiv = document.getElementById("result");
+  resultDiv.textContent = "⏳ Chargement...";
+
   fetch(url, {
     method: "POST",
     body: JSON.stringify(data),
     headers: { "Content-Type": "application/json" },
     mode: "no-cors"
   })
-  .then(() => {
-    const message = quantite > 0 
-      ? `✅ ${ref} ajouté au stock`
-      : `✅ ${ref} retiré du stock`;
-    document.getElementById("result").textContent = message;
-  })
-  .catch(err => {
-    document.getElementById("result").textContent = "❌ Erreur : " + err;
-  });
+    .then(() => {
+      const action = quantite > 0 ? "Ajouté" : "Retiré";
+      resultDiv.textContent = `✅ ${action} : ${ref}`;
+    })
+    .catch(err => {
+      resultDiv.textContent = "❌ Erreur : " + err;
+    });
 }
 
 addBtn.addEventListener("click", () => sendToSheet(1));
