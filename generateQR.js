@@ -9,9 +9,11 @@ function formatReference(input) {
 function generateQR() {
     const input = document.getElementById("referenceBox");
     const optionInput = document.getElementById("optionC");
+    const indiceInput = document.getElementById("indiceCharge");
 
-    const ref = input.value.trim(); // reste en majuscules
+    const ref = input.value.trim(); // déjà en majuscules
     const option = optionInput ? optionInput.value.trim().toUpperCase() : "";
+    const indice = indiceInput ? indiceInput.value.trim() : "";
 
     const qrDiv = document.getElementById("qrcode");
     const downloadBtn = document.getElementById("downloadBtn");
@@ -19,20 +21,28 @@ function generateQR() {
     qrDiv.innerHTML = "";
     downloadBtn.style.display = "none";
 
-    // ✅ Vérification stricte sur la référence (exactement 9 caractères avec /)
+    // 🔹 Vérifie la référence
     if (ref.length !== 9 || !/^[A-Z0-9]{3}\/[A-Z0-9]{5}$/.test(ref)) {
         alert("❌ Format attendu : XXX/XXXXX (ex : 255/55R16)");
         return;
     }
 
-    // ✅ Vérifie que l'option est vide ou exactement "C"
-    if (option !== "" && option !== "C") {
+    // 🔹 Vérifie l'option facultative
+    if (option && option !== "C") {
         alert("❌ L'option doit être vide ou contenir uniquement la lettre majuscule 'C'.");
         return;
     }
 
-    // ✅ Génération texte final avec ou sans l'option
-    const finalText = option === "C" ? `${ref} C` : ref;
+    // 🔹 Vérifie indice obligatoire (2 à 7 caractères)
+    if (indice.length < 2 || indice.length > 7) {
+        alert("❌ L'indice de charge doit contenir entre 2 et 7 caractères.");
+        return;
+    }
+
+    // 🔹 Construction finale avec espaces
+    let finalText = ref;
+    if (option === "C") finalText += " C";
+    finalText += " " + indice;
 
     const canvas = document.createElement("canvas");
     QRCode.toCanvas(canvas, finalText, { width: 250 }, (err) => {
