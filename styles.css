@@ -25,7 +25,7 @@
     gap: 20px;
 }
 
-#topMenu > button {
+#topMenu>button {
     background-color: #1e1e1e;
     color: #f5f5f5;
     border: none;
@@ -40,19 +40,19 @@
     user-select: none;
 }
 
-#topMenu > button:hover {
+#topMenu>button:hover {
     background-color: #fff500;
     color: #000;
     box-shadow: 0 6px 14px rgba(255, 245, 0, 0.8);
 }
 
-#topMenu > button.active {
+#topMenu>button.active {
     background-color: #fff500;
     color: #000;
     box-shadow: 0 6px 18px rgba(255, 245, 0, 0.9);
 }
 
-#topMenu > button.btn-account {
+#topMenu>button.btn-account {
     background-color: #fff500;
     color: #000;
     border: 2px solid #c6b700;
@@ -67,14 +67,15 @@
     user-select: none;
 }
 
-#topMenu > button.btn-account:hover {
+#topMenu>button.btn-account:hover {
     background-color: #d9ce00;
     color: #000;
     box-shadow: 0 6px 18px rgba(204, 187, 0, 0.9);
 }
 
 input[type="text"],
-#scannedValueInput {
+#scannedValueInput,
+select#saison {
     width: 320px;
     max-width: 90vw;
     padding: 12px 18px;
@@ -90,10 +91,12 @@ input[type="text"],
     transition: border-color 0.3s ease, background-color 0.3s ease;
     text-align: center;
     font-weight: 600;
+    text-transform: uppercase;
 }
 
 input[type="text"]:focus,
-#scannedValueInput:focus {
+#scannedValueInput:focus,
+select#saison:focus {
     border-color: #fff500;
     background-color: #262626;
 }
@@ -254,8 +257,26 @@ h1 {
     box-shadow: 0 6px 18px rgba(255, 245, 0, 0.9);
 }
 
-
-/* Force affichage en majuscules uniquement dans les champs de saisie */
 input[type="text"] {
+    text-transform: uppercase;
+}
+
+select#saison option {
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+select#saison {
+    width: 240px;
+    padding: 12px 18px;
+    font-size: 1rem;
+    border-radius: 14px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    background-color: #1a1a1a;
+    color: #777;
+    border: 3px solid #333;
+    outline: none;
+    text-align: center;
+    font-weight: 400;
     text-transform: uppercase;
 }
