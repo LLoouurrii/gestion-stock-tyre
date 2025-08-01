@@ -192,6 +192,24 @@
             color: #a0a8c0;
         }
 
+        #loginAlertBanner {
+            background-color: #d32f2f;
+            /* Rouge alerte */
+            color: #fff;
+            text-align: center;
+            padding: 14px 0;
+            font-size: 1.1rem;
+            font-weight: 700;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
+            position: fixed;
+            top: 60px;
+            /* Juste sous #topMenu */
+            left: 0;
+            width: 100%;
+            z-index: 999;
+        }
+
+
         .btn-group button:hover:not(:disabled) {
             background-color: #1f356f;
             box-shadow: 0 6px 16px rgba(31, 53, 111, 0.7);

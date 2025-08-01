@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Scan QR & Gestion Stock</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script src="https://unpkg.com/html5-qrcode"></script>
+  <link rel="stylesheet" href="styles.css">
+  <script src="scanQR.js" defer> </script>
+</head>
+
+
+<body>
+  <div id="topMenu">
+    <button id="btnScanQR">Démarrer Scan QR</button>
+    <button id="btnGenerateCode">Générer Code</button>
+  </div>
+
+  <h1>Scanner un QR Code</h1>
+
+  <div id="reader"></div>
+
+  <input type="text" id="scannedValueInput" placeholder="Le code scanné apparaîtra ici" />
+
+  <div class="btn-group">
+    <button id="addStockBtn" disabled>Ajouter Stock</button>
+    <button id="removeStockBtn" disabled>Retirer Stock</button>
+    <button id="rescanBtn" disabled>Rescanner</button>
+  </div>
+
+  <div id="result"></div>
+
+</body>
+
+</html>
