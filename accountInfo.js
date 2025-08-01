@@ -15,7 +15,7 @@ function parseJwt(token) {
 
 window.onload = () => {
     google.accounts.id.initialize({
-        client_id: "TON_CLIENT_ID.apps.googleusercontent.com", // Remplace par ton ID client OAuth
+        client_id:  '440684762959-1for0aulaia3dl2losusca0vjhnsei95.apps.googleusercontent.com', // Remplace par ton ID client OAuth
         callback: handleCredentialResponse
     });
     google.accounts.id.prompt(); // Affiche la boîte de connexion si nécessaire
