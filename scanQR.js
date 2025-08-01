@@ -1,13 +1,18 @@
 let qrScanner = null;
 let scanning = false;
 
-window.onload = () => {
+window.addEventListener("load", () => {
   const scannedValueInput = document.getElementById("scannedValueInput");
   const addBtn = document.getElementById("addStockBtn");
   const removeBtn = document.getElementById("removeStockBtn");
   const resultEl = document.getElementById("result");
   const readerEl = document.getElementById("reader");
   const startScanBtn = document.getElementById("startScanBtn");
+
+  if (!startScanBtn || !readerEl) {
+    console.error("Les éléments du DOM ne sont pas chargés correctement.");
+    return;
+  }
 
   qrScanner = new Html5Qrcode("reader");
 
@@ -39,13 +44,15 @@ window.onload = () => {
 
   function startScanner() {
     if (scanning) return;
-    scanning = true;
 
+    scanning = true;
     startScanBtn.textContent = "Arrêter le scan";
     readerEl.classList.add("scanning");
     scannedValueInput.value = "En attente du scan...";
 
-    qrScanner.start({ facingMode: "environment" }, { fps: 10, qrbox: 250 },
+    qrScanner.start(
+      { facingMode: "environment" },
+      { fps: 10, qrbox: 250 },
       (decodedText) => {
         qrScanner.stop().then(() => {
           scanning = false;
@@ -57,9 +64,13 @@ window.onload = () => {
           updateButtonsState();
         });
       },
-      () => {}
+      (errorMsg) => {
+        // silencieux
+      }
     ).catch(err => {
       scanning = false;
+      startScanBtn.textContent = "Scanner";
+      readerEl.classList.remove("scanning");
       resultEl.textContent = "⚠️ Erreur d’accès caméra : " + err;
     });
   }
@@ -70,6 +81,8 @@ window.onload = () => {
       scanning = false;
       startScanBtn.textContent = "Scanner";
       readerEl.classList.remove("scanning");
+    }).catch(err => {
+      resultEl.textContent = "Erreur arrêt scanner : " + err;
     });
   }
 
@@ -77,7 +90,8 @@ window.onload = () => {
     scanning ? stopScanner() : startScanner();
   }
 
-  // Events
+  // Événements
   startScanBtn.addEventListener("click", toggleScanner);
   scannedValueInput.addEventListener("input", updateButtonsState);
-};
+  updateButtonsState();
+});
