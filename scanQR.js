@@ -1,4 +1,88 @@
-const scriptUrl = "https://script.google.com/macros/s/TON_URL/exec";
+voilq notre code html q ne pas changer <!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Scan QR & Gestion Stock</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Librairie QR Code et Scanner -->
+  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+  <script src="https://unpkg.com/html5-qrcode"></script>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- Scripts locaux -->
+  <script src="scanQR.js" defer></script>
+  <script src="generateQR.js" defer></script>
+</head>
+
+<body>
+  <!-- Barre de navigation -->
+  <div id="topMenu">
+    <button id="btnScanQR" class="active">Démarrer Scan QR</button>
+    <button id="btnGenerateCode">Générer Code</button>
+    <button id="btnMonCompte" class="btn-account" onclick="window.location.href='account.html'">Mon compte</button>
+  </div>
+
+  <h1>Scanner un QR Code & Gérer le Stock</h1>
+
+  <div id="reader" style="margin-bottom: 20px;"></div>
+
+  <div id="controls" class="btn-group" style="flex-direction: column; align-items: center;">
+    <!-- Groupe horizontal : Référence + Option C -->
+    <div style="display: flex; gap: 10px; align-items: flex-start; max-width: 100%; margin-bottom: 4px;margin-left: -20px;">
+      <div style="display: flex; flex-direction: column;">
+        <label for="referenceBox" style="font-size: 1rem; font-weight: 600; margin-bottom: 4px; color: #f5f5f5;">Référence</label>
+        <input type="text" id="referenceBox" maxlength="9" placeholder="XXX/XXXXX" style="text-transform: uppercase;width: 150px;" />
+      </div>
+      <div style="display: flex; flex-direction: column;">
+        <label for="optionC" style="font-size: 1rem; font-weight: 600; margin-bottom: 4px; color: #f5f5f5;">Camionette</label>
+        <input type="text" id="optionC" maxlength="1" placeholder="C" style="width: 40px; text-align: center; text-transform: uppercase;" />
+      </div>
+    </div>
+
+    <!-- Indice de charge + vitesse -->
+    <div style="display: flex; gap: 20px; margin-bottom: 10px; align-items: flex-start; margin-top: -30px;margin-left: -20px;">
+      <div style="display: flex; flex-direction: column;">
+        <label for="indiceCharge" style="font-size: 1rem; font-weight: 600; margin-bottom: 4px; color: #f5f5f5;">Charge</label>
+        <input type="text" id="indiceCharge" maxlength="7" placeholder="107/105" style="width: 80px; text-align: center; text-transform: uppercase;" />
+      </div>
+      <div style="display: flex; flex-direction: column;">
+        <label for="indiceVitesse" style="font-size: 1rem; font-weight: 600; margin-bottom: 4px; color: #f5f5f5;">Vitesse</label>
+        <input type="text" id="indiceVitesse" maxlength="1" placeholder="H" style="width: 40px; text-align: center; text-transform: uppercase;" />
+      </div>
+    </div>
+
+    <!-- Marque -->
+    <div style="display: flex; flex-direction: column; align-items: flex-start; width: 100%; max-width: 360px; margin-bottom: 10px; margin-left: 60px;">
+      <label for="marque" style="font-size: 1rem; font-weight: 600; margin-bottom: 4px; margin-top: -35px; color: #f5f5f5;">Marque</label>
+      <input type="text" id="marque" placeholder="DOUBLECOIN" style="width: 100%; max-width: 240px; text-transform: uppercase;" />
+    </div>
+
+    <!-- Saison -->
+    <div style="display: flex; flex-direction: column; align-items: center; width: 100%; max-width: 360px; margin-bottom: 10px; margin-top: -30px; margin-left: -20px;">
+      <label for="saison" style="font-size: 1rem; font-weight: 500; margin-bottom: 4px; color: #f5f5f5;">Saison</label>
+      <select id="saison">
+        <option value="">-- Sélectionner --</option>
+        <option value="E">☀️ Été</option>
+        <option value="H">❄️ Hiver</option>
+        <option value="S">☀️/❄️ 4 Saisons</option>
+      </select>
+    </div>
+
+    <!-- Boutons de gestion stock -->
+    <div class="btn-group" style="margin-top: 10px; margin-left: -12px;">
+      <button id="addStockBtn" disabled>Ajouter Stock</button>
+      <button id="removeStockBtn" disabled>Retirer Stock</button>
+      <button id="rescanBtn" disabled>Rescanner</button>
+    </div>
+  </div>
+  <div id="result"></div>
+</body>
+
+</html> avec le qr code que l on va scanner on va avoir la chaine separe par les espace qu on a fait precemennt ensemle dans le js mtn refait ce js cote scqnner pour remplir automatiquement const scriptUrl = "https://script.google.com/macros/s/TON_URL/exec";
 
 let qrScanner = null;
 let scanning = false;
