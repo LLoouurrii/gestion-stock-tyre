@@ -28,22 +28,50 @@
 
     <div id="controls" class="btn-group" style="flex-direction: column; align-items: center;">
 
-        <!-- Référence avec positionnement à gauche et espace réduit -->
-        <div style="width: 100%; max-width: 320px; margin-bottom: 8px; align-self: flex-start;">
-            <label for="referenceBox"
-                style="font-size: 1rem; font-weight: 600; display: block; margin-bottom: 4px; color: #f5f5f5;">
-                Référence
-            </label>
-            <input type="text" id="referenceBox" maxlength="8" placeholder="XXX/XXXX" style="width: 100%;" />
+        <!-- Groupe horizontal : Référence + Option C -->
+        <!-- Groupe horizontal : Référence + Option C + Indice de charge -->
+        <div style="display: flex; gap: 10px; align-items: flex-start; max-width: 100%; margin-bottom: 10px;">
+            <!-- Référence -->
+            <div style="display: flex; flex-direction: column;">
+                <label for="referenceBox"
+                    style="font-size: 1rem; font-weight: 600; margin-bottom: 4px; color: #f5f5f5;">
+                    Référence
+                </label>
+                <input type="text" id="referenceBox" maxlength="9" placeholder="XXX/XXXXX"
+                    style="text-transform: uppercase;" />
+            </div>
+
+            <!-- Option C -->
+            <div style="display: flex; flex-direction: column;">
+                <label for="optionC" style="font-size: 1rem; font-weight: 600; margin-bottom: 4px; color: #f5f5f5;">
+                    Option
+                </label>
+                <input type="text" id="optionC" maxlength="1" placeholder="C"
+                    style="width: 40px; text-align: center; text-transform: uppercase;" />
+            </div>
+
+            <!-- Indice de charge (en dessous) -->
+            <div
+                style="display: flex; flex-direction: column; align-items: flex-start; width: 100%; max-width: 360px; margin-bottom: 10px;">
+                <label for="indiceCharge"
+                    style="font-size: 1rem; font-weight: 600; margin-bottom: 4px; color: #f5f5f5;">
+                    Indice de charge
+                </label>
+                <input type="text" id="indiceCharge" maxlength="3" placeholder="91"
+                    style="width: 100%; max-width: 80px; text-align: center;" />
+            </div>
+
         </div>
 
+
+        <!-- Boutons -->
         <div class="btn-group" style="margin-top: 10px;">
             <button class="generate" onclick="generateQR()">Générer</button>
             <button class="download" id="downloadBtn" style="display:none" onclick="downloadQR()">Télécharger</button>
         </div>
     </div>
 
-
+    <!-- QR Code -->
     <div id="qrcode" style="margin-top: 30px;"></div>
 </body>
 
