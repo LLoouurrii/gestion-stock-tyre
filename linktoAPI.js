@@ -20,7 +20,7 @@ function sendToSheet(action) {
   const ref = document.getElementById("referenceBox").value.trim();
   const marque = document.getElementById("marque").value.trim();
   const saison = document.getElementById("saison").value;
-  const url = "https://script.google.com/macros/s/AKfycbwEVF1Cvf_nzufjuqZObkqGna04w2NN2WEz5Pv_Sh5dob9xsc6TwtkD59QO8xsfGaWY/exec";
+  const url = "https://script.google.com/macros/s/AKfycbyd2DtU3z3JnOazZo0lJOZosfrp_F5vLe8QsBySzZ4/dev";
 
   if (!ref || !marque || !saison) {
     alert("Veuillez remplir tous les champs nécessaires.");
