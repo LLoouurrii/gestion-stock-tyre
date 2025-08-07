@@ -9,8 +9,8 @@ window.addEventListener("load", () => {
   const removeBtn = document.getElementById("removeStockBtn");
   const resultEl = document.getElementById("result");
   const readerEl = document.getElementById("reader");
-  const startScanBtn = document.getElementById("startScanBtn"); // bouton 📷 / 🛑
-  const photoBtn = startScanBtn; // alias pour plus de clarté
+  const startScanBtn = document.getElementById("startScanBtn");
+  const photoBtn = startScanBtn;
 
   function updateButtonsState() {
     const reference = document.getElementById("referenceBox").value.trim();
@@ -24,12 +24,12 @@ window.addEventListener("load", () => {
     startScanBtn.disabled = isBusy;
   }
 
-  photoBtn.addEventListener('click', async () => {
+  photoBtn.addEventListener("click", async () => {
     if (scanning) {
       photoBtn.textContent = "⏳";
       await stopScanner();
     } else {
-      photoBtn.classList.add('active');
+      photoBtn.classList.add("active");
       photoBtn.textContent = "🛑";
       await startScanner();
     }
@@ -69,13 +69,15 @@ window.addEventListener("load", () => {
       await qrScanner.start(
         { facingMode: "environment" },
         { fps: 10, qrbox: 250 },
-        (decodedText) => {
+        async (decodedText) => {
           if (!scanSessionActive) return;
           scannedValueInput.value = decodedText;
           fillFieldsFromQR(decodedText);
           resultEl.textContent = "✅ QR détecté";
+
+          await stopScanner(); // ← arrêt automatique après détection
         },
-        () => {}
+        () => { }
       );
     } catch (err) {
       resultEl.textContent = "⚠️ Erreur d’accès caméra : " + err;
