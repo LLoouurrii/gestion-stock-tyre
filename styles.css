@@ -27,8 +27,14 @@
   scrollbar-width: none; /* Firefox */
 }
 
+/* Chrome, Edge, Safari */
 #topMenu::-webkit-scrollbar {
-  display: none; /* Chrome, Safari */
+  display: none;
+}
+
+#topMenu::-webkit-scrollbar {
+  display: none;
+  /* Chrome, Safari */
 }
 
 #topMenu button {
