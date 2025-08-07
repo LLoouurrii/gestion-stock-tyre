@@ -8,14 +8,13 @@ function formatReference(input) {
 
 function generateQR() {
   const input = document.getElementById("referenceBox");
-  const optionInput = document.getElementById("optionC");
   const indiceInput = document.getElementById("indiceCharge");
   const vitesseInput = document.getElementById("indiceVitesse");
   const marqueInput = document.getElementById("marque");
   const saisonInput = document.getElementById("saison"); // ➕
 
   const ref = input.value.trim();
-  const option = optionInput ? optionInput.value.trim().toUpperCase() : "";
+  const option = document.getElementById("optionC").checked ? "C" : "";
   const indice = indiceInput ? indiceInput.value.trim().toUpperCase() : "";
   const vitesse = vitesseInput ? vitesseInput.value.trim().toUpperCase() : "";
   const marque = marqueInput ? marqueInput.value.trim().toUpperCase() : "";

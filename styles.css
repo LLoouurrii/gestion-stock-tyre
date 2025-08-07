@@ -31,7 +31,7 @@
 }
 
 #resultsTable {
-  margin-top: 30px;
+  margin-top: 0px;
   display: flex;
   justify-content: center;
   width: 100%;
@@ -39,22 +39,26 @@
 
 #resultsTable table {
   border-collapse: collapse;
-  width: 50%;
-  max-width: 800px;
+  width: 400px;              /* ✅ largeur fixe pour plus de contrôle */
+  max-width: 90vw;           /* ✅ responsive sur petits écrans */
   background-color: #1a1a1a;
   color: #f5f5f5;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
   border-radius: 12px;
   overflow: hidden;
-  font-size: 0.95rem;
+  font-size: 0.6rem;         /* ✅ légèrement plus petit pour compacité */
 }
 
 #resultsTable th,
 #resultsTable td {
   border: 1px solid #333;
-  padding: 12px 16px;
+  padding: 8px 12px;         /* ✅ réduit pour un look plus compact */
   text-align: center;
   vertical-align: middle;
+  max-width: 150px;          /* ✅ limite la largeur des cellules */
+  white-space: nowrap;       /* ✅ empêche le retour à la ligne */
+  overflow: hidden;
+  text-overflow: ellipsis;   /* ✅ ajoute "..." si le texte dépasse */
 }
 
 #resultsTable th {
@@ -72,7 +76,6 @@
 #resultsTable td {
   font-weight: 500;
 }
-
 #topMenu>button {
     background-color: #1e1e1e;
     color: #f5f5f5;

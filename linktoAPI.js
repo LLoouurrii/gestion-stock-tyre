@@ -35,7 +35,7 @@ function sendToSheet(quantite) {
   const url = "https://script.google.com/macros/s/AKfycbyYzLoiC8VL9KHPl2X1MnMUIZ7--4ceRR7nvb2BSsT4QOCRQ-eE9q3ZTw2DlyjANgUo/exec";
 
   const ref = document.getElementById("referenceBox").value.trim();
-  const camionnette = document.getElementById("optionC").value.trim();
+  const camionnette = document.getElementById("optionC").checked ? "C" : "";
   const charge = document.getElementById("indiceCharge").value.trim();
   const vitesse = document.getElementById("indiceVitesse").value.trim();
   const marque = document.getElementById("marque").value.trim();
