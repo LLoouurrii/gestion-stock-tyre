@@ -71,6 +71,10 @@ window.addEventListener("load", () => {
         { fps: 10, qrbox: 250 },
         async (decodedText) => {
           if (!scanSessionActive) return;
+
+          // 🔒 Désactive immédiatement la session pour bloquer les lectures suivantes
+          scanSessionActive = false;
+
           scannedValueInput.value = decodedText;
           fillFieldsFromQR(decodedText);
           resultEl.textContent = "✅ QR détecté";
