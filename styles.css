@@ -24,13 +24,11 @@
   z-index: 1000;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   gap: 12px;
-  scrollbar-width: none;
-  /* Firefox */
+  scrollbar-width: none; /* Firefox */
 }
 
 #topMenu::-webkit-scrollbar {
-  display: none;
-  /* Chrome, Safari */
+  display: none; /* Chrome, Safari */
 }
 
 #topMenu button {
