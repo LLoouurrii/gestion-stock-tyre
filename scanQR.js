@@ -1,6 +1,7 @@
 let qrScanner = null;
 let scanning = false;
 let isBusy = false;
+let scanSessionActive = false;
 
 window.addEventListener("load", () => {
   const scannedValueInput = document.getElementById("scannedValueInput");
@@ -8,15 +9,8 @@ window.addEventListener("load", () => {
   const removeBtn = document.getElementById("removeStockBtn");
   const resultEl = document.getElementById("result");
   const readerEl = document.getElementById("reader");
-  const startScanBtn = document.getElementById("startScanBtn");
-  const photoBtn = document.querySelector('.btn-photo');
-
-  if (!startScanBtn || !readerEl) {
-    console.error("Les éléments du DOM ne sont pas chargés correctement.");
-    return;
-  }
-
-  qrScanner = new Html5Qrcode("reader");
+  const startScanBtn = document.getElementById("startScanBtn"); // bouton 📷 / 🛑
+  const photoBtn = startScanBtn; // alias pour plus de clarté
 
   function updateButtonsState() {
     const reference = document.getElementById("referenceBox").value.trim();
@@ -30,16 +24,21 @@ window.addEventListener("load", () => {
     startScanBtn.disabled = isBusy;
   }
 
-  if (photoBtn) {
-    photoBtn.addEventListener('click', () => {
-      photoBtn.classList.toggle('active');
-    });
-  }
+  photoBtn.addEventListener('click', async () => {
+    if (scanning) {
+      photoBtn.textContent = "⏳";
+      await stopScanner();
+    } else {
+      photoBtn.classList.add('active');
+      photoBtn.textContent = "🛑";
+      await startScanner();
+    }
+  });
 
   function fillFieldsFromQR(data) {
     const parts = data.trim().split(/\s+/);
     document.getElementById("referenceBox").value = parts[0] || "";
-    document.getElementById("optionC").value = parts.includes("C") ? "C" : "";
+    document.getElementById("optionC").checked = parts.includes("C");
 
     const chargeIndex = parts.includes("C") ? 2 : 1;
     const vitesseIndex = chargeIndex + 1;
@@ -52,69 +51,64 @@ window.addEventListener("load", () => {
     document.getElementById("saison").value = parts[saisonIndex] || "";
   }
 
-  function startScanner() {
+  async function startScanner() {
     if (scanning || isBusy) return;
 
     isBusy = true;
     updateButtonsState();
 
-    startScanBtn.textContent = "📷";
+    qrScanner = new Html5Qrcode("reader");
+    scanSessionActive = true;
+    scanning = true;
+
+    startScanBtn.textContent = "🛑";
     readerEl.classList.add("scanning");
     scannedValueInput.value = "En attente du scan...";
 
-    qrScanner.start(
-      { facingMode: "environment" },
-      { fps: 10, qrbox: 250 },
-      (decodedText) => {
-        qrScanner.stop().then(() => {
-          scanning = false;
-          isBusy = false;
-          startScanBtn.textContent = "📷";
-          readerEl.classList.remove("scanning");
-
+    try {
+      await qrScanner.start(
+        { facingMode: "environment" },
+        { fps: 10, qrbox: 250 },
+        (decodedText) => {
+          if (!scanSessionActive) return;
           scannedValueInput.value = decodedText;
           fillFieldsFromQR(decodedText);
-          updateButtonsState();
-        });
-      },
-      () => {
-        // Silencieux
-      }
-    ).then(() => {
-      scanning = true;
-      updateButtonsState();
-    }).catch(err => {
-      scanning = false;
-      isBusy = false;
-      startScanBtn.textContent = "📷";
-      readerEl.classList.remove("scanning");
+          resultEl.textContent = "✅ QR détecté";
+        },
+        () => {}
+      );
+    } catch (err) {
       resultEl.textContent = "⚠️ Erreur d’accès caméra : " + err;
-      updateButtonsState();
-    });
+      scanning = false;
+      scanSessionActive = false;
+    }
+
+    isBusy = false;
+    updateButtonsState();
   }
 
-  function stopScanner() {
-    if (!scanning) return;
+  async function stopScanner() {
+    if (!scanning || isBusy || !qrScanner) return;
 
     isBusy = true;
     updateButtonsState();
 
-    qrScanner.stop().then(() => {
+    try {
+      scanSessionActive = false;
+      await qrScanner.stop();
+      await qrScanner.clear();
+      qrScanner = null;
       scanning = false;
-      isBusy = false;
-      startScanBtn.textContent = "📷";
-      readerEl.classList.remove("scanning");
-      updateButtonsState();
-    }).catch(err => {
-      isBusy = false;
-      resultEl.textContent = "Erreur arrêt scanner : " + err;
-      updateButtonsState();
-    });
-  }
 
-  function toggleScanner() {
-    if (isBusy) return;
-    scanning ? stopScanner() : startScanner();
+      readerEl.classList.remove("scanning");
+      startScanBtn.textContent = "📷";
+      photoBtn.classList.remove("active");
+    } catch (err) {
+      resultEl.textContent = "Erreur arrêt scanner : " + err;
+    }
+
+    isBusy = false;
+    updateButtonsState();
   }
 
   function setBusyState(isLoading) {
@@ -139,7 +133,6 @@ window.addEventListener("load", () => {
     const marque = document.getElementById("marque").value.trim();
     const action = actionType === "add" ? "ajouté" : "retiré";
 
-    // Simule une requête serveur (remplace par ton fetch réel)
     setTimeout(() => {
       resultEl.innerHTML = `✅ Le modèle de référence <strong style="color: #007bff;">${ref}</strong> de la marque <strong>${marque}</strong> a été ${action}.`;
 
@@ -148,7 +141,7 @@ window.addEventListener("load", () => {
           setBusyState(false);
         }, 100);
       });
-    }, 2000); // Simule 2s de traitement serveur
+    }, 2000);
   }
 
   addBtn.addEventListener("click", () => {
@@ -159,7 +152,6 @@ window.addEventListener("load", () => {
     handleStockAction("remove");
   });
 
-  startScanBtn.addEventListener("click", toggleScanner);
   scannedValueInput.addEventListener("input", updateButtonsState);
   updateButtonsState();
 });

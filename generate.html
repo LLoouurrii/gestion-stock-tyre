@@ -2,31 +2,32 @@
 <html lang="fr">
 
 <head>
-    <meta charset="UTF-8" />
-    <title>Générer un QR Code</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8" />
+  <title>Générer un QR Code</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <!-- Librairie QRCode -->
-    <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+  <!-- Librairie QRCode -->
+  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
 
-    <!-- Styles -->
-    <link rel="stylesheet" href="styles.css">
+  <!-- Styles -->
+  <link rel="stylesheet" href="styles.css">
 
-    <!-- Script local -->
-    <script src="generateQR.js" defer></script>
+  <!-- Script local -->
+  <script src="generateQR.js" defer></script>
 </head>
 
 <body>
-    <!-- Barre de navigation -->
-    <div id="topMenu">
-        <button onclick="window.location.href='logged.html'">Démarrer Scan QR</button>
-        <button class="active">Générer Code</button>
-        <button class="btn-account" onclick="window.location.href='account.html'">Mon compte</button>
-    </div>
+  <!-- Barre de navigation -->
+  <div id="topMenu">
+    <button onclick="window.location.href='logged.html'">Scanner & Gérer</button>
+    <button class="active">Générer QRCode</button>
+    <button onclick="window.location.href='research.html'">Rechercher Stock</button>
+    <button onclick="window.location.href='account.html'">Mon compte</button>
+  </div>
 
-    <h1>Générer un QR Code</h1>
+  <h1>Générer un QR Code</h1>
 
-    <div id="controls" class="btn-group" style="flex-direction: column; align-items: center;">
+  <div id="controls" class="btn-group" style="flex-direction: column; align-items: center;">
 
     <!-- Groupe horizontal : Référence + Option C -->
     <div style="display: flex; gap: 10px; align-items: flex-start; max-width: 100%; margin-bottom: 4px;">
@@ -40,7 +41,7 @@
       </div>
 
       <!-- Option C -->
-    <div style="display: flex; flex-direction: column; align-items: flex-start;">
+      <div style="display: flex; flex-direction: column; align-items: flex-start;">
         <label for="optionC">Camionnette</label>
         <label class="switch" style="margin-top: 10px; margin-left: 15px;">
           <input type="checkbox" id="optionC" />
@@ -64,7 +65,8 @@
 
       <!-- Indice de vitesse -->
       <div style="display: flex; flex-direction: column;">
-        <label for="indiceVitesse" style="font-size: 1rem; font-weight: 600; margin-bottom: 4px; color: #f5f5f5; margin-left: 15px;">
+        <label for="indiceVitesse"
+          style="font-size: 1rem; font-weight: 600; margin-bottom: 4px; color: #f5f5f5; margin-left: 15px;">
           Vitesse
         </label>
         <input type="text" id="indiceVitesse" maxlength="1" placeholder="H"
@@ -96,15 +98,15 @@
       </select>
     </div>
 
-        <!-- Boutons -->
-        <div class="btn-group" style="margin-top: 10px;">
-            <button class="generate" onclick="generateQR()">Générer</button>
-            <button class="download" id="downloadBtn" style="display:none" onclick="downloadQR()">Télécharger</button>
-        </div>
+    <!-- Boutons -->
+    <div class="btn-group" style="margin-top: 10px;">
+      <button class="generate" onclick="generateQR()">Générer</button>
+      <button class="download" id="downloadBtn" style="display:none" onclick="downloadQR()">Télécharger</button>
     </div>
+  </div>
 
-    <!-- QR Code -->
-    <div id="qrcode" style="margin-top: 30px;"></div>
+  <!-- QR Code -->
+  <div id="qrcode" style="margin-top: 30px;"></div>
 </body>
 
 </html>
