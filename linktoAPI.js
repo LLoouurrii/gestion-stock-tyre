@@ -32,7 +32,7 @@ function getSaisonAvecEmoji(saison) {
 }
 
 function sendToSheet(quantite) {
-  const url = "https://script.google.com/macros/s/AKfycbxunOMQ2ahzddOhVdvp3a66Wst8EpWwc9mmMcdOBaKv5VMpuyfWzP6wUnxKKbtmizIz/exec";
+  const url = "https://script.google.com/macros/s/AKfycbxtBAvVZvBhzFjpDuqorub002D5ahAX22RDRxnYeBJbOv3l4Z4e7M5LMuOUNL-yFzn2/exec";
 
   const ref = document.getElementById("referenceBox").value.trim();
   const camionnette = document.getElementById("optionC").value.trim();
@@ -41,7 +41,7 @@ function sendToSheet(quantite) {
   const marque = document.getElementById("marque").value.trim();
   let saison = document.getElementById("saison").value;
 
-  if (!ref || !marque || !saison) {
+  if (!ref || !marque || !saison || !vitesse || !charge || !saison) {
     alert("Veuillez remplir tous les champs obligatoires.");
     return;
   }
@@ -59,6 +59,7 @@ function sendToSheet(quantite) {
   };
 
   const resultDiv = document.getElementById("result");
+  resultDiv.textContent = saison;
   resultDiv.textContent = "⏳ Chargement...";
 
   fetch(url, {
