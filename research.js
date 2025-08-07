@@ -20,7 +20,7 @@ function ResearchInStock() {
     .map(([k, v]) => `${k}=${encodeURIComponent(v)}`)
     .join("&");
 
-  const url = `https://script.google.com/macros/s/AKfycbzZY_MOqEX9uK4NbPsksUU7wOzQvx96dIRKizRY9Qrq83cTzSfstYpz68cWIgx7ew1D/exec?${query}`;
+  const url = `https://script.google.com/macros/s/AKfycbw6IEG1iMhSL3t03O5JdtNs8DdubH3cAHRTjDB2ITjunNElZdePeb-NVCqaF1tFnDb0/exec?${query}`;
 
   console.log("URL générée :", url); // pour debug
 
@@ -43,25 +43,20 @@ function ResearchInStock() {
 function displayResults(data) {
   const container = document.getElementById("resultsTable");
 
-  // Vérifie si la case Camionnette est cochée
   const isCamionnetteChecked = document.getElementById("optionC").checked;
+  const selectedSaison = document.getElementById("saison").value.trim().toUpperCase();
 
-  // Filtre les résultats selon l'état de la case
   const filteredData = data.filter(item => {
-    if (isCamionnetteChecked) {
-      return item.camionnette === "C";
-    } else {
-      return item.camionnette === ""; // 👈 ligne sans "C"
-    }
+    const matchCamionnette = isCamionnetteChecked ? item.camionnette === "C" : item.camionnette === "";
+    const matchSaison = selectedSaison === "" || item.saison.toUpperCase() === selectedSaison;
+    return matchCamionnette && matchSaison;
   });
 
-  // Si aucun résultat
   if (!Array.isArray(filteredData) || filteredData.length === 0) {
     container.innerHTML = "<p>Aucun résultat trouvé.</p>";
     return;
   }
 
-  // Génère le tableau HTML
   let html = "<table><thead><tr><th>Référence</th><th>Camionnette</th><th>Charge</th><th>Vitesse</th><th>Marque</th><th>Saison</th><th>Stock</th></tr></thead><tbody>";
   filteredData.forEach(item => {
     html += `<tr>
