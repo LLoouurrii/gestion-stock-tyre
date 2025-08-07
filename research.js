@@ -1,54 +1,46 @@
 function ResearchInStock() {
   const container = document.getElementById("resultsTable");
 
-  // Affiche le message de chargement
-  container.innerHTML = "<p style='color: #fff500; font-weight: 600;'>⏳ Recherche en cours...</p>";
+  container.innerHTML = "<p style='color: #fff500;'>⏳ Recherche en cours...</p>";
 
-  // Récupération des champs
+  const saisonCode = document.getElementById("saison").value;
+
   const params = {
     reference: document.getElementById("referenceBox").value.trim().toUpperCase(),
     camionnette: document.getElementById("optionC").checked ? "C" : "",
     charge: document.getElementById("indiceCharge").value.trim().toUpperCase(),
     vitesse: document.getElementById("indiceVitesse").value.trim().toUpperCase(),
     marque: document.getElementById("marque").value.trim().toUpperCase(),
-    saison: document.getElementById("saison").value.trim().toUpperCase()
+    saison: saisonCode
   };
 
-  // Construction de la requête
   const query = Object.entries(params)
-    .filter(([_, v]) => v !== "") // exclut les champs vides
+    .filter(([_, v]) => v !== "")
     .map(([k, v]) => `${k}=${encodeURIComponent(v)}`)
     .join("&");
 
-  const url = `https://script.google.com/macros/s/AKfycbw6IEG1iMhSL3t03O5JdtNs8DdubH3cAHRTjDB2ITjunNElZdePeb-NVCqaF1tFnDb0/exec?${query}`;
+  const url = `https://script.google.com/macros/s/AKfycbzrqfopKc8lNl_j2ixwl27BIw3aBXd90msW72OZ0F_yGytnrY5GfnzlGdV8_6NHhShI/exec?${query}`;
 
-  console.log("URL générée :", url); // pour debug
-
-  // Requête fetch
   fetch(url)
     .then(res => {
       if (!res.ok) throw new Error("Réponse non valide");
       return res.json();
     })
     .then(data => {
-      console.log("Réponse reçue :", data);
-      displayResults(data);
+      displayResults(data, saisonCode);
     })
-    .catch(err => {
-      console.error("Erreur :", err);
+    .catch(() => {
       container.innerHTML = "<p style='color: red;'>❌ Erreur de recherche</p>";
     });
 }
 
-function displayResults(data) {
+function displayResults(data, saisonEnvoyee) {
   const container = document.getElementById("resultsTable");
-
   const isCamionnetteChecked = document.getElementById("optionC").checked;
-  const selectedSaison = document.getElementById("saison").value.trim().toUpperCase();
 
   const filteredData = data.filter(item => {
     const matchCamionnette = isCamionnetteChecked ? item.camionnette === "C" : item.camionnette === "";
-    const matchSaison = selectedSaison === "" || item.saison.toUpperCase() === selectedSaison;
+    const matchSaison = saisonEnvoyee === "" || normalizeSaison(item.saison) === saisonEnvoyee;
     return matchCamionnette && matchSaison;
   });
 
@@ -70,6 +62,22 @@ function displayResults(data) {
     </tr>`;
   });
   html += "</tbody></table>";
-
   container.innerHTML = html;
+}
+
+function normalizeSaison(value) {
+  if (!value) return "";
+
+  const cleaned = value
+    .toUpperCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^A-Z0-9 ]/g, "")
+    .trim();
+
+  if (cleaned.includes("4 SAISONS") || cleaned.includes("TOUTESAISONS")) return "S";
+  if (cleaned.includes("ETE")) return "E";
+  if (cleaned.includes("HIVER")) return "H";
+
+  return "";
 }
