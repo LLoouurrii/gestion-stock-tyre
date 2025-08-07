@@ -46,7 +46,7 @@ window.addEventListener("load", () => {
     if (scanning) return;
 
     scanning = true;
-    startScanBtn.textContent = "Arrêter le scan";
+    startScanBtn.textContent = "📷";
     readerEl.classList.add("scanning");
     scannedValueInput.value = "En attente du scan...";
 
@@ -56,7 +56,7 @@ window.addEventListener("load", () => {
       (decodedText) => {
         qrScanner.stop().then(() => {
           scanning = false;
-          startScanBtn.textContent = "Scanner";
+          startScanBtn.textContent = "📷";
           readerEl.classList.remove("scanning");
 
           scannedValueInput.value = decodedText;
@@ -69,7 +69,7 @@ window.addEventListener("load", () => {
       }
     ).catch(err => {
       scanning = false;
-      startScanBtn.textContent = "Scanner";
+      startScanBtn.textContent = "📷";
       readerEl.classList.remove("scanning");
       resultEl.textContent = "⚠️ Erreur d’accès caméra : " + err;
     });
@@ -79,7 +79,7 @@ window.addEventListener("load", () => {
     if (!scanning) return;
     qrScanner.stop().then(() => {
       scanning = false;
-      startScanBtn.textContent = "Scanner";
+      startScanBtn.textContent = "📷";
       readerEl.classList.remove("scanning");
     }).catch(err => {
       resultEl.textContent = "Erreur arrêt scanner : " + err;

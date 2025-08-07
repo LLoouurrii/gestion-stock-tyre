@@ -57,19 +57,48 @@
     box-shadow: 0 6px 18px rgba(255, 245, 0, 0.9);
 }
 
+.btn-photo {
+  background-color: #1a1a1a;
+  color: white;
+  border: none;
+  font-size: 26px;
+  line-height: 1;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  display: flex;
+  align-items: center;   
+  justify-content: center;
+  gap: 6px;
+  height: 50px;
+  padding: 0 12px;
+}
+.btn-photo:hover {
+  background-color: #d9ce00;
+  color: #000;
+  box-shadow: 0 6px 18px rgba(204, 187, 0, 0.9);
+}
+
+
 #topMenu>button.btn-account {
-    background-color: #fff500;
-    color: #000;
-    border: 2px solid #c6b700;
-    border-radius: 30px;
-    padding: 8px 18px;
+    background-color: #1e1e1e;
+    color: #f5f5f5;
+    border: none;
+    border-radius: 25px;
+    padding: 8px 16px;
     font-weight: 700;
     font-size: 0.65rem;
     cursor: pointer;
-    box-shadow: 0 5px 14px rgba(255, 245, 0, 0.7);
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.6);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
     min-width: 100px;
     user-select: none;
+}
+
+#topMenu>button.btn-account.active {
+    background-color: #fff500;
+    color: #000;
+    box-shadow: 0 6px 18px rgba(255, 245, 0, 0.9);
 }
 
 #topMenu>button.btn-account:hover {
