@@ -8,6 +8,7 @@ window.addEventListener("load", () => {
   const resultEl = document.getElementById("result");
   const readerEl = document.getElementById("reader");
   const startScanBtn = document.getElementById("startScanBtn");
+  const photoBtn = document.querySelector('.btn-photo');
 
   if (!startScanBtn || !readerEl) {
     console.error("Les éléments du DOM ne sont pas chargés correctement.");
@@ -26,6 +27,12 @@ window.addEventListener("load", () => {
     removeBtn.disabled = !isReady;
   }
 
+  if (photoBtn) {
+    photoBtn.addEventListener('click', function () {
+      photoBtn.classList.toggle('active');
+    });
+  }
+
   function fillFieldsFromQR(data) {
     const parts = data.trim().split(/\s+/);
     document.getElementById("referenceBox").value = parts[0] || "";
@@ -41,6 +48,14 @@ window.addEventListener("load", () => {
     document.getElementById("marque").value = parts[marqueIndex] || "";
     document.getElementById("saison").value = parts[saisonIndex] || "";
   }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    const photoBtn = document.querySelector('.btn-photo');
+
+    photoBtn.addEventListener('click', function () {
+      photoBtn.classList.toggle('active');
+    });
+  });
 
   function startScanner() {
     if (scanning) return;
