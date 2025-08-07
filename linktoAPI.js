@@ -32,7 +32,7 @@ function getSaisonAvecEmoji(saison) {
 }
 
 function sendToSheet(quantite) {
-  const url = "https://script.google.com/macros/s/AKfycbx2grcth2FCwDt0AOyp6H9WNCl8Iq5V2iQ2boDyJr15y8-1L5VW02rOLMrGuOb4-Ciq/exec";
+  const url = "https://script.google.com/macros/s/AKfycbyYzLoiC8VL9KHPl2X1MnMUIZ7--4ceRR7nvb2BSsT4QOCRQ-eE9q3ZTw2DlyjANgUo/exec";
 
   const ref = document.getElementById("referenceBox").value.trim();
   const camionnette = document.getElementById("optionC").value.trim();
@@ -68,10 +68,6 @@ function sendToSheet(quantite) {
     headers: { "Content-Type": "application/json" },
     mode: "no-cors"
   })
-    .then(() => {
-      const action = quantite > 0 ? "Ajouté" : "Retiré";
-      resultDiv.innerHTML = `✅ Le modèle de référence <strong style="color: #007bff;">${ref}</strong> de la marque <strong>${marque}</strong> a été ${action}.`;
-    })
     .catch(err => {
       resultDiv.textContent = "❌ Erreur : " + err;
     });

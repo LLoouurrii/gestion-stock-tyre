@@ -1,5 +1,6 @@
 let qrScanner = null;
 let scanning = false;
+let isBusy = false;
 
 window.addEventListener("load", () => {
   const scannedValueInput = document.getElementById("scannedValueInput");
@@ -22,13 +23,15 @@ window.addEventListener("load", () => {
     const marque = document.getElementById("marque").value.trim();
     const saison = document.getElementById("saison").value;
     const isReady = reference && marque && saison;
+    const shouldDisable = !isReady || scanning || isBusy;
 
-    addBtn.disabled = !isReady;
-    removeBtn.disabled = !isReady;
+    addBtn.disabled = shouldDisable;
+    removeBtn.disabled = shouldDisable;
+    startScanBtn.disabled = isBusy;
   }
 
   if (photoBtn) {
-    photoBtn.addEventListener('click', function () {
+    photoBtn.addEventListener('click', () => {
       photoBtn.classList.toggle('active');
     });
   }
@@ -49,18 +52,12 @@ window.addEventListener("load", () => {
     document.getElementById("saison").value = parts[saisonIndex] || "";
   }
 
-  document.addEventListener('DOMContentLoaded', function () {
-    const photoBtn = document.querySelector('.btn-photo');
-
-    photoBtn.addEventListener('click', function () {
-      photoBtn.classList.toggle('active');
-    });
-  });
-
   function startScanner() {
-    if (scanning) return;
+    if (scanning || isBusy) return;
 
-    scanning = true;
+    isBusy = true;
+    updateButtonsState();
+
     startScanBtn.textContent = "📷";
     readerEl.classList.add("scanning");
     scannedValueInput.value = "En attente du scan...";
@@ -71,6 +68,7 @@ window.addEventListener("load", () => {
       (decodedText) => {
         qrScanner.stop().then(() => {
           scanning = false;
+          isBusy = false;
           startScanBtn.textContent = "📷";
           readerEl.classList.remove("scanning");
 
@@ -79,33 +77,88 @@ window.addEventListener("load", () => {
           updateButtonsState();
         });
       },
-      (errorMsg) => {
-        // silencieux
+      () => {
+        // Silencieux
       }
-    ).catch(err => {
+    ).then(() => {
+      scanning = true;
+      updateButtonsState();
+    }).catch(err => {
       scanning = false;
+      isBusy = false;
       startScanBtn.textContent = "📷";
       readerEl.classList.remove("scanning");
       resultEl.textContent = "⚠️ Erreur d’accès caméra : " + err;
+      updateButtonsState();
     });
   }
 
   function stopScanner() {
     if (!scanning) return;
+
+    isBusy = true;
+    updateButtonsState();
+
     qrScanner.stop().then(() => {
       scanning = false;
+      isBusy = false;
       startScanBtn.textContent = "📷";
       readerEl.classList.remove("scanning");
+      updateButtonsState();
     }).catch(err => {
+      isBusy = false;
       resultEl.textContent = "Erreur arrêt scanner : " + err;
+      updateButtonsState();
     });
   }
 
   function toggleScanner() {
+    if (isBusy) return;
     scanning ? stopScanner() : startScanner();
   }
 
-  // Événements
+  function setBusyState(isLoading) {
+    isBusy = isLoading;
+    updateButtonsState();
+
+    if (isLoading) {
+      addBtn.classList.add("loading");
+      removeBtn.classList.add("loading");
+    } else {
+      addBtn.classList.remove("loading");
+      removeBtn.classList.remove("loading");
+    }
+  }
+
+  function handleStockAction(actionType) {
+    if (isBusy) return;
+
+    setBusyState(true);
+
+    const ref = document.getElementById("referenceBox").value.trim();
+    const marque = document.getElementById("marque").value.trim();
+    const action = actionType === "add" ? "ajouté" : "retiré";
+
+    // Simule une requête serveur (remplace par ton fetch réel)
+    setTimeout(() => {
+      resultEl.innerHTML = `✅ Le modèle de référence <strong style="color: #007bff;">${ref}</strong> de la marque <strong>${marque}</strong> a été ${action}.`;
+
+      requestAnimationFrame(() => {
+        setTimeout(() => {
+          setBusyState(false);
+        }, 100);
+      });
+    }, 2000); // Simule 2s de traitement serveur
+  }
+
+  addBtn.addEventListener("click", () => {
+    handleStockAction("add");
+  });
+
+  removeBtn.addEventListener("click", () => {
+    handleStockAction("remove");
+  });
+
   startScanBtn.addEventListener("click", toggleScanner);
   scannedValueInput.addEventListener("input", updateButtonsState);
   updateButtonsState();
