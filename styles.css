@@ -10,6 +10,9 @@
 }
 
 #topMenu {
+    display: flex;
+    overflow-x: auto;
+    white-space: nowrap;
     position: fixed;
     margin-left: -20px;
     top: 0;
