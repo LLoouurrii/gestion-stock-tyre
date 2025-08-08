@@ -1,5 +1,10 @@
 const allowedEmails = [
-  'louri.panfiloff@gmail.com'
+  'louri.panfiloff@gmail.com',
+  'e.tyresmax@gmail.com',
+  'a.tyresmax@gmail.com',
+  'tom.tyresmax@gmail.com',
+  'ab.tyresmax@mail.com',
+  'y.tyresmax@gmail.com
 ];
 
 function parseJwt(token) {
