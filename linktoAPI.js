@@ -32,7 +32,7 @@ function getSaisonAvecEmoji(saison) {
 }
 
 function sendToSheet(quantite) {
-  const url = "https://script.google.com/macros/s/AKfycbzWu49ZltzUcA-fDNhs7wsRxi8mVlvMc7_X4HCb6t4FoUOIugpcdhm9uiXMyRjwhXoY/exec";
+  const url = "https://script.google.com/macros/s/AKfycbzC8Uz212IbDdJsXWyBX31gY1tBtxuV4L1A7kurihVzYgTunimTPz7nZpzIMerP1Bh5/exec";
 
   const ref = document.getElementById("referenceBox").value.trim();
   const camionnette = document.getElementById("optionC").checked ? "C" : "";
