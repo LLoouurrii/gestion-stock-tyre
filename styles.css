@@ -24,7 +24,8 @@
   z-index: 1000;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   gap: 12px;
-  scrollbar-width: none; /* Firefox */
+  scrollbar-width: none;
+  /* Firefox */
 }
 
 /* Chrome, Edge, Safari */
@@ -64,37 +65,33 @@
   margin-top: 0px;
   display: flex;
   justify-content: center;
+  overflow-x: auto; /* ✅ permet le scroll horizontal sur mobile */
+  padding: 8px;
 }
 
 #resultsTable table {
   border-collapse: collapse;
-  width: 400px;
-  /* ✅ largeur fixe pour plus de contrôle */
-  max-width: 90vw;
-  /* ✅ responsive sur petits écrans */
+  width: 100%;
+  max-width: 600px; /* ✅ limite sur desktop */
+  min-width: 400px; /* ✅ évite que ça devienne trop petit */
   background-color: #1a1a1a;
   color: #f5f5f5;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
   border-radius: 12px;
   overflow: hidden;
-  font-size: 0.4rem;
-  /* ✅ légèrement plus petit pour compacité */
+  font-size: 0.6rem; /* ✅ un peu plus lisible sur mobile */
 }
 
 #resultsTable th,
 #resultsTable td {
   border: 1px solid #333;
-  padding: 8px 12px;
-  /* ✅ réduit pour un look plus compact */
+  padding: 6px 10px;
   text-align: center;
   vertical-align: middle;
   max-width: 150px;
-  /* ✅ limite la largeur des cellules */
   white-space: nowrap;
-  /* ✅ empêche le retour à la ligne */
   overflow: hidden;
   text-overflow: ellipsis;
-  /* ✅ ajoute "..." si le texte dépasse */
 }
 
 #resultsTable th {
@@ -113,6 +110,18 @@
   font-weight: 500;
 }
 
+/* ✅ Responsive mobile */
+@media screen and (max-width: 480px) {
+  #resultsTable table {
+    font-size: 0.2rem;
+    min-width: unset;
+  }
+
+  #resultsTable th,
+  #resultsTable td {
+    padding: 4px 6px;
+  }
+}
 #topMenu>button {
   background-color: #1e1e1e;
   color: #f5f5f5;
@@ -468,4 +477,9 @@ select#saison {
   /* 👈 déplace vers la gauche */
   top: 500px;
   /* 👈 déplace vers le bas */
+}
+
+#qrcode canvas {
+  background-color: #ffffff !important;
+  border-radius: 8px;
 }
