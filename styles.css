@@ -113,7 +113,7 @@
 /* ✅ Responsive mobile */
 @media screen and (max-width: 480px) {
   #resultsTable table {
-    font-size: 0.2rem;
+    font-size: 0.35rem;
     min-width: unset;
   }
 
