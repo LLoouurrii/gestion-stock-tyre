@@ -19,7 +19,7 @@ function ResearchInStock() {
     .map(([k, v]) => `${k}=${encodeURIComponent(v)}`)
     .join("&");
 
-  const url = `https://script.google.com/macros/s/AKfycbxRL_9yKSgru-fz6mtDODBH6xMTGA6uliIyHyinymUH-BvnpOskLxK2CDKyk4qBbtvwhA/exec?${query}`;
+  const url = `https://script.google.com/macros/s/AKfycbxfg3-rbmEX6mRlXZL6y0wBJpZnGCwEFiIIrOspPlplNj9yMk9Clp3WMc4-bNruBF3lMg/exec?${query}`;
 
   fetch(url)
     .then(res => {
