@@ -4,7 +4,7 @@ const allowedEmails = [
   'a.tyresmax@gmail.com',
   'tom.tyresmax@gmail.com',
   'ab.tyresmax@mail.com',
-  'y.tyresmax@gmail.com
+  'y.tyresmax@gmail.com'
 ];
 
 function parseJwt(token) {
