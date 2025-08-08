@@ -12,6 +12,10 @@
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <script src="accountInfo.js" defer></script>
   <script src="scrollbar-memory.js"></script>
+  <script src="blockaccess.js"></script>
+  <script>
+    checkGoogleAccess();
+  </script>
 </head>
 
 <body>
@@ -25,19 +29,12 @@
 
   <!-- Bouton Google -->
   <div style="text-align:center; margin-top:40px;">
-    <div id="g_id_onload"
-      data-client_id="440684762959-1for0aulaia3dl2losusca0vjhnsei95.apps.googleusercontent.com"
-      data-callback="handleCredentialResponse"
-      data-auto_prompt="false">
+    <div id="g_id_onload" data-client_id="440684762959-1for0aulaia3dl2losusca0vjhnsei95.apps.googleusercontent.com"
+      data-callback="handleCredentialResponse" data-auto_prompt="false">
     </div>
 
-    <div class="g_id_signin"
-      data-type="standard"
-      data-size="large"
-      data-theme="outline"
-      data-text="signin_with"
-      data-shape="rectangular"
-      data-logo_alignment="left">
+    <div class="g_id_signin" data-type="standard" data-size="large" data-theme="outline" data-text="signin_with"
+      data-shape="rectangular" data-logo_alignment="left">
     </div>
   </div>
 
